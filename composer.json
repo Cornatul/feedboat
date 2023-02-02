@@ -1,0 +1,49 @@
+{
+    "name": "unixdevil/feedboat",
+    "description": "A set of tools to find feeds from different sources ",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Stefan I",
+            "email": "Stefan@unxidevil.com",
+            "homepage": "https://unixdevil.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "UnixDevil\\FeedBoat\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UnixDevil\\FeedBoat\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": ">=7.5.0",
+        "illuminate/support": ">=9.0.0",
+        "spatie/laravel-data": ">=3.0.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "UnixDevil\\FeedBoat\\Providers\\FeedBoatServiceProvider"
+            ]
+        }
+    }
+}
