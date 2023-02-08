@@ -35,4 +35,21 @@ class FeedsController extends Controller
         return view('feeds::index', compact('results'));
     }
 
+
+    /**
+     * @throws \JsonException
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'feed' => 'required|json'
+        ]);
+
+        $feeds = json_decode($request->get('feed'), false, 512, JSON_THROW_ON_ERROR);
+
+        dd($feeds);
+        return redirect()->route('feeds.index');
+    }
+
+
 }

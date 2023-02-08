@@ -39,9 +39,10 @@
                         <td>{{ $feed["subscribers"] }}</td>
                         <td>{{ Str::limit(($feed["description"])) }}</td>
                         <td>
-                            <a href="{{ route('feeds.import', $feed) }}" class="btn btn-sm btn-primary">
-                                {{ __('Import') }}
-                            </a>
+                            <form action="{{ route('feeds.import') }}" method="POST" class="form-inline mb-3 mb-md-0">
+                                <input type="hidden" name="feed" value="{{ json_encode($feed) }}">
+                                <button type="submit" class="btn btn-light btn-md">{{ __('Subscribe') }}</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
