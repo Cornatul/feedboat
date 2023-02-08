@@ -1,5 +1,5 @@
 {
-    "name": "unixdevil/feedboat",
+    "name": "cornatul/feeds",
     "description": "A set of tools to find feeds from different sources ",
     "type": "library",
     "license": "MIT",
@@ -8,17 +8,17 @@
             "role": "Developer",
             "name": "Stefan I",
             "email": "Stefan@unxidevil.com",
-            "homepage": "https://unixdevil.com/"
+            "homepage": "https://cornatul.com/"
         }
     ],
     "autoload": {
         "psr-4": {
-            "UnixDevil\\FeedBoat\\": "src/"
+            "Cornatul\\Feeds\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "UnixDevil\\FeedBoat\\Tests\\": "tests/"
+            "Cornatul\\Feeds\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -33,7 +33,7 @@
         "phpunit/phpunit": "^9.5"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
@@ -42,7 +42,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "UnixDevil\\FeedBoat\\Providers\\FeedBoatServiceProvider"
+                "Cornatul\\Feeds\\FeedsServiceProvider"
             ]
         }
     }

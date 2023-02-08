@@ -1,16 +1,15 @@
 <?php
 
-namespace UnixDevil\FeedBoat\Clients;
+namespace Cornatul\Feeds\Clients;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
-use UnixDevil\FeedBoat\DTO\FeedDTO;
-use UnixDevil\FeedBoat\Interfaces\FeedInterface;
+use Cornatul\Feeds\DTO\FeedDto;
+use Cornatul\Feeds\Interfaces\FeedInterface;
 
-class FeedClient implements FeedInterface
+class FeedlyClient implements FeedInterface
 {
-
     private ClientInterface $client;
     public function __construct(ClientInterface $client)
     {
@@ -35,9 +34,11 @@ class FeedClient implements FeedInterface
 
             $dataArray = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
-            return FeedDTO::from($dataArray);
+            return FeedDto::from($dataArray);
+
         } catch (GuzzleException $exception) {
-            return FeedDTO::from($dataArray);
+            //todo replace this with a proper DTO
+            return FeedDto::from($dataArray);
         }
     }
 

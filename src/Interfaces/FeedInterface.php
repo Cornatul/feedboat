@@ -1,10 +1,11 @@
 <?php
 
-namespace UnixDevil\FeedBoat\Interfaces;
+namespace Cornatul\Feeds\Interfaces;
 
-use UnixDevil\FeedBoat\DTO\FeedDTO;
+use Cornatul\Feeds\DTO\FeedDto;
 
 interface FeedInterface
 {
-    public function find(string $topic): FeedDTO;
+    //todo change tis to return a base dto
+    public function find(string $topic): FeedDto;
 }
