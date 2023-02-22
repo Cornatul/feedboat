@@ -1,21 +1,21 @@
 @extends('marketing::layouts.app')
 
-@section('title', __('Feeds'))
+@section('title', __('Imported Feeds'))
 
 @section('heading')
-    {{ __('Feeds') }}
+    {{ __('Imported Feeds') }}
 @endsection
 
 @section('content')
     <ul class="nav nav-pills mb-4">
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('feeds.imported') ? 'active'  : '' }}"
-               href="{{ route('feeds.imported') }}">{{ __('Imported Feeds') }}</a>
+               href="{{ route('feeds.imported') }}">{{ __('Import Feeds') }}</a>
         </li>
     </ul>
-    <div id="feeds"></div>
+    <div id="imported"></div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/feeds.js') }}"></script>
+    <script src="{{ asset('js/imported.js') }}"></script>
 @endpush

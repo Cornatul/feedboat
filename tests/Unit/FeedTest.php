@@ -2,12 +2,12 @@
 
 namespace UnixDevil\FeedBoat\Tests\Unit;
 
+use Cornatul\Feeds\Clients\FeedlyClient;
+use Cornatul\Feeds\DTO\FeedDto;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Mockery;
 
-use UnixDevil\FeedBoat\Clients\FeedClient;
-use UnixDevil\FeedBoat\DTO\FeedDTO;
 
 class FeedTest extends \UnixDevil\FeedBoat\Tests\TestCase
 {
@@ -19,17 +19,17 @@ class FeedTest extends \UnixDevil\FeedBoat\Tests\TestCase
     public function testGetSentiment()
     {
 
-        $sentiment= $this->getMockBuilder(FeedDTO::class)
+        $dto= $this->getMockBuilder(FeedDto::class)
             ->getMock();
         //generate a test for the sentiment client
-        $mock = $this->getMockBuilder(FeedClient::class)
+        $mock = $this->getMockBuilder(FeedlyClient::class)
             ->setConstructorArgs([Mockery::mock(ClientInterface::class)])
             ->getMock();
         $mock->method('find')
             ->with('laravel')
-            ->willReturn($sentiment);
+            ->willReturn($dto);
 
-        $this->assertSame($sentiment, $mock->find('laravel'));
+        $this->assertSame($dto, $mock->find('laravel'));
 
     }
 

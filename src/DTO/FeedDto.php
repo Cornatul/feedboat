@@ -2,53 +2,54 @@
 
 namespace Cornatul\Feeds\DTO;
 
+use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
 
 /**
  * @method static from
  */
-class FeedDto extends BaseFeedDto
+class FeedDto extends Data
 {
 
     public string $language;
 
     public int $size;
 
+    #[MapInputName('relatedTopics')]
+    public array $topics;
+
     #[MapInputName('feedInfos')]
     public array $feeds;
 
-    public function getFeeds(): array
+    final public function getFeeds(): array
     {
-        $content = collect([]);
+        $content = collect();
 
         foreach ($this->feeds as $feed) {
             $prefix = 'feed/';
-            $url = $feed['feedId'];
-            if (str_starts_with($url, $prefix)) {
-                $url= substr($url, strlen($prefix));
-            }
+            $url = str_replace($prefix, '', $feed['id']);
 
             $data = [
                 'title' => $feed['title'],
-                'image' => @$feed['coverUrl'],
+                'image' => $feed['coverUrl'] ?? null,
                 'subscribers' => $feed['subscribers'],
-                'description' => @$feed['description'],
-                'topics' => @$feed['topics'],
-                'website' => @$feed['website'],
+                'description' => $feed['description'] ?? null,
+                'topics' => $feed['topics'] ?? null,
+                'website' => @$feed['website'] ?? null,
                 'score'=> $feed['leoScore'] ?? 0,
-                'last_update' => gmdate('Y-m-d', $feed['updated']),
-                'updated' => $feed['updated'],
+                'updated' => Carbon::parse($feed['updated'])->format('Y-m-d H:i:s'),
                 'url' => $url,
             ];
 
-            $data["exists"] = false;
+
 
             $content->push($data);
         }
 
-        $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true);
-
-        return $content->toArray();
+        return $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true)
+            ->toArray();
     }
+
+
 }

@@ -37,7 +37,7 @@ class FeedlyClient implements FeedInterface
             return FeedDto::from($dataArray);
 
         } catch (GuzzleException $exception) {
-            //todo replace this with a proper DTO
+
             return FeedDto::from($dataArray);
         }
     }
