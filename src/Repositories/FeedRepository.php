@@ -4,7 +4,7 @@ namespace Cornatul\Feeds\Repositories;
 
 use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Models\Feed;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 class FeedRepository implements FeedRepositoryInterface
 {
 
@@ -35,5 +35,10 @@ class FeedRepository implements FeedRepositoryInterface
     final public function imported(string $url): bool
     {
         return Feed::where('url', $url)->exists();
+    }
+
+    final public function listFeeds(int $perPage): LengthAwarePaginator
+    {
+        return Feed::orderBy('created_at')->paginate($perPage);
     }
 }

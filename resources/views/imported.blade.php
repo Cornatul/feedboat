@@ -13,6 +13,7 @@
                href="{{ route('feeds.imported') }}">{{ __('Import Feeds') }}</a>
         </li>
     </ul>
+
     <div class="card">
         <div class="card-table table-responsive">
             <table class="table">
@@ -25,11 +26,21 @@
                 </tr>
                 </thead>
                 <tbody>
+
                     @foreach($feeds as $feed)
                         <tr>
 
                             <td>
-                                <a href="#">{{ $feed->name }}</a>
+                                <a href="#">{{ $feed->title }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ $feed->created_at }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ $feed->status }}</a>
+                            </td>
+                            <td>
+                                <a href="#">Delete</a>
                             </td>
                         </tr>
                     @endforeach

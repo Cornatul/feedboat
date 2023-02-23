@@ -3,6 +3,7 @@
 namespace Cornatul\Feeds\Jobs;
 
 use Cornatul\Feeds\DTO\ArticleDto;
+use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
 use Illuminate\Bus\Queueable;
@@ -28,9 +29,10 @@ class SaveArticle implements ShouldQueue
         $this->source = $source;
     }
 
-    final public function handle(): void
+    final public function handle(ArticleRepositoryInterface $articleRepository): void
     {
         try {
+
             $postData = [
                 'feed_id' => $this->feed->id,
                 'source' => $this->source,
@@ -47,7 +49,7 @@ class SaveArticle implements ShouldQueue
                 'entities' => json_encode($this->article->entities, JSON_THROW_ON_ERROR),
             ];
 
-            Article::create($postData);
+            $articleRepository->create($postData);
 
         } catch (\Exception $exception) {
             info($exception->getMessage());

@@ -48,8 +48,9 @@ class FeedsController extends Controller
 
     final public function imported(FeedRepositoryInterface $feedRepository): Application|Factory|ViewContract
     {
+        $feeds = $feedRepository->listFeeds(10);
 
-        return view('feeds::imported');
+        return view('feeds::imported', compact('feeds'));
     }
 
     final public function subscribe(Request $request, FeedRepositoryInterface $feedRepository): JsonResponse
