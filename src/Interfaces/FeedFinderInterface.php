@@ -4,7 +4,7 @@ namespace Cornatul\Feeds\Interfaces;
 
 use Cornatul\Feeds\DTO\FeedDto;
 
-interface FeedInterface
+interface FeedFinderInterface
 {
     public function find(string $topic): FeedDto;
 }

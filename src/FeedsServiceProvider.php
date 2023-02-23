@@ -3,9 +3,9 @@
 namespace Cornatul\Feeds;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
-use Cornatul\Feeds\Interfaces\FeedInterface;
-use Cornatul\Feeds\Services\FeedPortal;
-use Cornatul\Marketing\Base\Services\Marketingportal;
+use Cornatul\Feeds\Interfaces\FeedFinderInterface;
+use Cornatul\Feeds\Repositories\FeedRepository;
+use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Foundation\Application;
@@ -42,11 +42,9 @@ class FeedsServiceProvider extends ServiceProvider
     final public function register(): void
     {
         $this->app->bind(ClientInterface::class, Client::class);
-        $this->app->bind(FeedInterface::class, FeedlyClient::class);
+        $this->app->bind(FeedFinderInterface::class, FeedlyClient::class);
+        $this->app->bind(FeedRepositoryInterface::class, FeedRepository::class);
 
-        $this->app->bind('feeds', static function (Application $app) {
-            return $app->make(FeedPortal::class);
-        });
     }
 
 }

@@ -11,15 +11,41 @@ return new class extends Migration
      *
      * @return void
      */
+
+
+    /**
+     * @return void
+
+    public string $title;
+    public ?string $date;
+    public string $text;
+    public string $html;
+    public string $markdown;
+    public string $banner;
+    public string $summary;
+    public ?array $authors;
+    public ?array $keywords;
+    public ?array $images;
+    public ?array $entities;
+     */
+
     public function up()
     {
         Schema::create('feeds_article', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('feed_id')->constrained('feeds')->onDelete('cascade');
-            $table->string('title');
-            $table->string('url');
-            $table->string('content');
-            $table->string('image');
+            $table->foreignId('feed_id')->nullable();
+            $table->string('source')->nullable();
+            $table->string('title')->nullable();
+            $table->string('date')->nullable();
+            $table->longText('text');
+            $table->longText('html');
+            $table->longText('markdown');
+            $table->string('banner');
+            $table->longText('summary');
+            $table->json('authors')->nullable();
+            $table->json('keywords')->nullable();
+            $table->json('images')->nullable();
+            $table->json('entities')->nullable();
             $table->timestamps();
         });
     }

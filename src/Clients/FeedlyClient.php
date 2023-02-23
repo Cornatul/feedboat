@@ -2,13 +2,14 @@
 
 namespace Cornatul\Feeds\Clients;
 
+use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use Cornatul\Feeds\DTO\FeedDto;
-use Cornatul\Feeds\Interfaces\FeedInterface;
 
-class FeedlyClient implements FeedInterface
+
+class FeedlyClient implements FeedFinderInterface
 {
     private ClientInterface $client;
     public function __construct(ClientInterface $client)
@@ -22,7 +23,7 @@ class FeedlyClient implements FeedInterface
      * @method find
      * @throws JsonException
      */
-    public function find(string $topic, string $language = "en"): FeedDTO
+    final public function find(string $topic, string $language = "en"): FeedDTO
     {
         $dataArray = [];
         try {

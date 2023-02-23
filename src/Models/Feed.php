@@ -43,9 +43,16 @@ class Feed extends Model
 
     protected $table = 'feeds';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'user_id',
         'title',
+        'description',
+        'image',
+        'score',
+        'subscribers',
         'url',
         'sync'
     ];

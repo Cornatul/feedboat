@@ -16,9 +16,13 @@ return new class extends Migration
     {
         Schema::create('feeds', static function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index()->nullable();
-            $table->string('url')->index()->nullable();
-            $table->string('status')->index()->default(Feed::INITIAL);
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('url')->nullable();
+            $table->string('image')->nullable();
+            $table->integer('score')->nullable();
+            $table->timestamp('last_update')->nullable();
+            $table->integer('subscribers')->nullable();
             $table->timestamps();
         });
     }

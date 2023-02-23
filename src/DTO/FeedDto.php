@@ -22,6 +22,10 @@ class FeedDto extends Data
     #[MapInputName('feedInfos')]
     public array $feeds;
 
+    public string $updated;
+
+    public string $visual;
+
     final public function getFeeds(): array
     {
         $content = collect();
@@ -36,8 +40,12 @@ class FeedDto extends Data
                 'subscribers' => $feed['subscribers'],
                 'description' => $feed['description'] ?? null,
                 'topics' => $feed['topics'] ?? null,
-                'website' => @$feed['website'] ?? null,
+                "iconUrl" => $feed['iconUrl'] ?? null,
+                "coverUrl" => $feed['coverUrl'] ?? null,
+                "visualUrl" => $feed['visualUrl'] ?? null,
+                'website' => $feed['website'] ?? null,
                 'score'=> $feed['leoScore'] ?? 0,
+                "imported" => $this->checkImported($url),
                 'updated' => Carbon::parse($feed['updated'])->format('Y-m-d H:i:s'),
                 'url' => $url,
             ];
@@ -51,5 +59,9 @@ class FeedDto extends Data
             ->toArray();
     }
 
+    private function checkImported(string $url): bool
+    {
+        return \Cornatul\Feeds\Models\Feed::where('url', $url)->exists();
+    }
 
 }
