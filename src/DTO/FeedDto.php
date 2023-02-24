@@ -35,6 +35,8 @@ class FeedDto extends Data
             $url = str_replace($prefix, '', $feed['id']);
 
             $data = [
+                'id' => $feed['id'] ?? null,
+                'feedId' => $feed['feedId'] ?? null,
                 'title' => $feed['title'] ?? null,
                 'image' => $feed['coverUrl'] ?? null,
                 'subscribers' => $feed['subscribers'] ?? 0,

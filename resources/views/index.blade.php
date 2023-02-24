@@ -9,7 +9,6 @@
 @section('content')
     <!-- Insert here a partials !-->
     @include('feeds::partials.nav')
-
     <!-- Cards !-->
     <div class="card">
         <div class="card-table table-responsive">

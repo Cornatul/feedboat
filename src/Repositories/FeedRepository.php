@@ -16,9 +16,14 @@ class FeedRepository implements FeedRepositoryInterface
         }
 
         $id = Feed:: create([
+            'user_id' => $data['user_id'] ?? 1,
             'title' => $data['title'],
+            'description' => $data['description'],
+            'image' => $data['image'],
+            'score' => $data['score'] ?? 0,
+            'subscribers' => $data['subscribers'] ?? 0,
             'url' => $data['url'],
-            'status' => 'active'
+            'sync' => 'initial'
         ]);
         return (bool)$id;
     }

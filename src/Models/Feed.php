@@ -57,9 +57,7 @@ class Feed extends Model
         'url',
         'sync'
     ];
-    protected $dates = [
-        'sync',
-    ];
+
 
     final public function user(): BelongsTo
     {
