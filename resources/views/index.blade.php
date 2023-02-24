@@ -7,13 +7,10 @@
 @endsection
 
 @section('content')
-    <ul class="nav nav-pills mb-4">
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('feeds.imported') ? 'active'  : '' }}"
-               href="{{ route('feeds.imported') }}">{{ __('Import Feeds') }}</a>
-        </li>
-    </ul>
+    <!-- Insert here a partials !-->
+    @include('feeds::partials.nav')
 
+    <!-- Cards !-->
     <div class="card">
         <div class="card-table table-responsive">
             <table class="table">
@@ -26,10 +23,8 @@
                 </tr>
                 </thead>
                 <tbody>
-
                     @foreach($feeds as $feed)
                         <tr>
-
                             <td>
                                 <a href="#">{{ $feed->title }}</a>
                             </td>
@@ -48,5 +43,4 @@
             </table>
         </div>
     </div>
-
 @endsection

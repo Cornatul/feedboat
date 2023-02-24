@@ -2,6 +2,7 @@
 
 namespace Cornatul\Feeds\DTO;
 
+use Cornatul\Feeds\Models\Feed;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
@@ -11,7 +12,6 @@ use Spatie\LaravelData\Data;
  */
 class FeedDto extends Data
 {
-
     public string $language;
 
     public int $size;
@@ -35,9 +35,9 @@ class FeedDto extends Data
             $url = str_replace($prefix, '', $feed['id']);
 
             $data = [
-                'title' => $feed['title'],
+                'title' => $feed['title'] ?? null,
                 'image' => $feed['coverUrl'] ?? null,
-                'subscribers' => $feed['subscribers'],
+                'subscribers' => $feed['subscribers'] ?? 0,
                 'description' => $feed['description'] ?? null,
                 'topics' => $feed['topics'] ?? null,
                 "iconUrl" => $feed['iconUrl'] ?? null,
@@ -50,18 +50,15 @@ class FeedDto extends Data
                 'url' => $url,
             ];
 
-
-
             $content->push($data);
         }
 
-        return $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true)
-            ->toArray();
+        return $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true)->toArray();
     }
 
     private function checkImported(string $url): bool
     {
-        return \Cornatul\Feeds\Models\Feed::where('url', $url)->exists();
+        return Feed::where('url', $url)->exists();
     }
 
 }

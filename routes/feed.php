@@ -1,9 +1,16 @@
 <?php
 
-Route::group(['prefix' => 'feeds', 'as' => 'feeds.'], function () {
-    Route::get('/', '\Cornatul\Feeds\Http\Controllers\FeedsController@index')->name('index');
-    Route::get('search/{topic}', '\Cornatul\Feeds\Http\Controllers\FeedsController@search')->name('search');
-    Route::get('imported', '\Cornatul\Feeds\Http\Controllers\FeedsController@imported')->name('imported');
+use Cornatul\Feeds\Http\Controllers\FeedsApiController;
+use Cornatul\Feeds\Http\Controllers\FeedsController;
+use Illuminate\Support\Facades\Route;
 
-    Route::post('subscribe', '\Cornatul\Feeds\Http\Controllers\FeedsController@subscribe')->name('subscribe');
+
+Route::group(['prefix' => 'feeds', 'as' => 'feeds.'], static function ()
+{
+    Route::get('/', [FeedsController::class, 'index'])->name('index');
+    Route::get('search', [FeedsController::class, 'search'])->name('search');
+    // Api routes
+
+    Route::get('search/{topic}', [FeedsApiController::class, 'searchAction'])->name('searchAction');
+    Route::post('subscribe', [FeedsApiController::class, 'subscribeAction'])->name('subscribeAction');
 });

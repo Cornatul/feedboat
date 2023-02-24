@@ -17,7 +17,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Contracts\View\View as ViewContract;
-class FeedsController extends Controller
+class FeedsApiController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
@@ -26,19 +26,28 @@ class FeedsController extends Controller
         $this->middleware('auth');
     }
 
-    final public function index(FeedRepositoryInterface $feedRepository): ViewContract
+    final public function searchAction(string $topic, FeedFinderInterface $feed): JsonResponse
     {
-        $feeds = $feedRepository->listFeeds(10);
 
-        return view('feeds::index', compact('feeds'));
+        $feedDto = $feed->find($topic, 'en');
+
+        $feeds = collect([
+            'topics' => $feedDto->topics,
+            "feeds" => $feedDto->getFeeds(),
+            "feed" => $feedDto
+        ]);
+
+        return response()->json(  $feeds->toArray(),200,[],JSON_PRETTY_PRINT);
     }
 
-    final public function search():ViewContract
+    final public function subscribeAction(Request $request, FeedRepositoryInterface $feedRepository): JsonResponse
     {
-        return view('feeds::search');
+        $response = $feedRepository->createFeed($request->all());
+        if($response){
+            $feed = $feedRepository->findFeed('url',$request->get('url'));
+            dispatch(new FeedExtractor($feed))->onQueue("feed-extractor");
+        }
+        return response()->json($response);
     }
-
-
-
 
 }

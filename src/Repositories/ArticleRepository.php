@@ -3,12 +3,13 @@
 namespace Cornatul\Feeds\Repositories;
 
 use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Models\Article;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
     public function create(array $data): bool
     {
-        // TODO: Implement create() method.
+        return Article::create($data);
     }
 
     public function destroy(int $id): bool
