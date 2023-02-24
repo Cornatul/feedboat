@@ -28,6 +28,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @method   static create(array $array)
  * @method   static firstOrCreate(array $array)
  * @method   static first()
+ * @column created_at
  */
 class Feed extends Model
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace UnixDevil\FeedBoat\Tests\Unit;
+namespace Cornatul\Feeds\Tests\Unit;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\DTO\FeedDto;
@@ -9,14 +9,13 @@ use GuzzleHttp\Exception\GuzzleException;
 use Mockery;
 
 
-class FeedTest extends \UnixDevil\FeedBoat\Tests\TestCase
+class FeedTest extends \Cornatul\Feeds\Tests\TestCase
 {
 
     /**
      * @throws \JsonException
-     * @throws GuzzleException
      */
-    public function testGetSentiment()
+    public function testGetSentiment():void
     {
 
         $dto= $this->getMockBuilder(FeedDto::class)

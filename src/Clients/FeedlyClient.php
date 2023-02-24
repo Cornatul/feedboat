@@ -23,7 +23,7 @@ class FeedlyClient implements FeedFinderInterface
      * @method find
      * @throws JsonException
      */
-    final public function find(string $topic, string $language = "en"): FeedDTO
+    public function find(string $topic, string $language = "en"): FeedDTO
     {
         $dataArray = [];
         try {

@@ -26,12 +26,12 @@ class FeedsController extends Controller
         $this->middleware('auth');
     }
 
-    final public function index()
+    final public function search()
     {
-        return view('feeds::index');
+        return view('feeds::search');
     }
 
-    final public function search(string $topic, FeedFinderInterface $feed): JsonResponse
+    final public function searchAction(string $topic, FeedFinderInterface $feed): JsonResponse
     {
 
         $feedDto = $feed->find($topic, 'en');
@@ -46,14 +46,14 @@ class FeedsController extends Controller
     }
 
 
-    final public function imported(FeedRepositoryInterface $feedRepository): Application|Factory|ViewContract
+    final public function index(FeedRepositoryInterface $feedRepository): Application|Factory|ViewContract
     {
         $feeds = $feedRepository->listFeeds(10);
 
-        return view('feeds::imported', compact('feeds'));
+        return view('feeds::index', compact('feeds'));
     }
 
-    final public function subscribe(Request $request, FeedRepositoryInterface $feedRepository): JsonResponse
+    final public function subscribeAction(Request $request, FeedRepositoryInterface $feedRepository): JsonResponse
     {
         $response = $feedRepository->createFeed($request->all());
         if($response){

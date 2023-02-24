@@ -1,21 +1,52 @@
 @extends('marketing::layouts.app')
 
-@section('title', __('Feeds'))
+@section('title', __('Imported Feeds'))
 
 @section('heading')
-    {{ __('Feeds') }}
+    {{ __('Imported Feeds') }}
 @endsection
 
 @section('content')
     <ul class="nav nav-pills mb-4">
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('feeds.imported') ? 'active'  : '' }}"
-               href="{{ route('feeds.imported') }}">{{ __('Imported Feeds') }}</a>
+               href="{{ route('feeds.imported') }}">{{ __('Import Feeds') }}</a>
         </li>
     </ul>
-    <div id="feeds"></div>
-@endsection
 
-@push('js')
-    <script src="{{ asset('js/feeds.js') }}"></script>
-@endpush
+    <div class="card">
+        <div class="card-table table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Created') }}</th>
+                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Actions') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    @foreach($feeds as $feed)
+                        <tr>
+
+                            <td>
+                                <a href="#">{{ $feed->title }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ $feed->created_at }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ $feed->status }}</a>
+                            </td>
+                            <td>
+                                <a href="#">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+@endsection

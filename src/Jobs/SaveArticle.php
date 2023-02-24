@@ -17,7 +17,6 @@ class SaveArticle implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     private ArticleDto $article;
     private Feed $feed;
     private string $source;
