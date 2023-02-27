@@ -13,6 +13,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 
+
+
 class SaveArticle implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -28,8 +30,14 @@ class SaveArticle implements ShouldQueue
         $this->source = $source;
     }
 
+    /**
+     * @throws \JsonException
+     */
     final public function handle(ArticleRepositoryInterface $articleRepository): void
     {
+
+        logger(json_encode($this->article, JSON_THROW_ON_ERROR));
+
         try {
 
             $postData = [

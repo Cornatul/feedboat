@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Article
  * @method static create(array $postData)
+ * @method static where(string $column, int $value)
  */
 class Article extends Model
 {
@@ -26,5 +27,7 @@ class Article extends Model
         "keywords",
         "images",
         "entities",
+        "social",
+        "sentiment",
     ];
 }

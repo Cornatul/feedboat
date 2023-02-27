@@ -2,6 +2,7 @@
 
 namespace Cornatul\Feeds\Http\Controllers;
 
+use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
@@ -33,6 +34,20 @@ class FeedsController extends Controller
         return view('feeds::index', compact('feeds'));
     }
 
+    final public function articles(int $feedID, ArticleRepositoryInterface $articleRepository): ViewContract
+    {
+        $articles = $articleRepository->getArticlesByFeedId($feedID, 10);
+
+        return view('feeds::articles', compact('articles'));
+    }
+
+
+
+    final public function article(int $articleID, ArticleRepositoryInterface $articleRepository): ViewContract
+    {
+        $article = $articleRepository->getArticleById($articleID);
+
+    }
     final public function search():ViewContract
     {
         return view('feeds::search');

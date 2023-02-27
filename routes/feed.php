@@ -9,6 +9,8 @@ Route::group(['prefix' => 'feeds', 'as' => 'feeds.'], static function ()
 {
     Route::get('/', [FeedsController::class, 'index'])->name('index');
     Route::get('search', [FeedsController::class, 'search'])->name('search');
+    Route::get('/articles/{feedID}', [FeedsController::class, 'articles'])->name('articles');
+    Route::get('/articles/{articleID}', [FeedsController::class, 'article'])->name('article');
     // Api routes
 
     Route::get('search/{topic}', [FeedsApiController::class, 'searchAction'])->name('searchAction');

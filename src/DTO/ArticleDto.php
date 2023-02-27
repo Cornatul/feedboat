@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Normalizers\ModelNormalizer;
+use stdClass;
 
 /**
  * @package Cornau\Feeds\DTO
@@ -26,5 +27,6 @@ class ArticleDto extends Data
     public ?array $keywords;
     public ?array $images;
     public ?array $entities;
-    public ?array $sentiment;
+    public ? StdClass $sentiment;
+    public ? StdClass $social;
 }
