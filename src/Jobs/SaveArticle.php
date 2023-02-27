@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\Jobs;
 
 use Cornatul\Feeds\DTO\ArticleDto;
@@ -46,6 +46,8 @@ class SaveArticle implements ShouldQueue
                 'keywords' => json_encode($this->article->keywords, JSON_THROW_ON_ERROR),
                 'images' => json_encode($this->article->images, JSON_THROW_ON_ERROR),
                 'entities' => json_encode($this->article->entities, JSON_THROW_ON_ERROR),
+                'social' => json_encode($this->article->social, JSON_THROW_ON_ERROR),
+                'sentiment' => json_encode($this->article->sentiment, JSON_THROW_ON_ERROR),
             ];
 
             $articleRepository->create($postData);

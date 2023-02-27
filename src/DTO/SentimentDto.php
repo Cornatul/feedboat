@@ -9,11 +9,11 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Normalizers\ModelNormalizer;
 
 /**
- * @package Cornau\Feeds\DTO
- * @class ArticleDto
+ * @package Cornatu\Feeds\DTO
+ * @class SentimentDto
  *
  */
-class ArticleDto extends Data
+class SentimentDto extends Data
 {
     public string $title;
     public ?string $date;

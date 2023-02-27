@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Cornatul\Feeds\Jobs;
 
 
@@ -15,7 +16,6 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Laminas\Feed\Reader\Reader;
-use Vedmant\FeedReader\Facades\FeedReader;
 
 /**
  * @package UnixDevil\Crawler\Jobs
@@ -34,16 +34,17 @@ class FeedExtractor implements ShouldQueue
         $this->feed = $feed;
     }
 
-    /**
-     * @throws Throwable
-     */
     final public function handle(): void
     {
+        $this->feed->sync = Feed::SYNCING;
+        $this->feed->save();
+
         try {
 
             $data = Reader::import($this->feed->url);
 
-            foreach ($data as $key => $entry) {
+            foreach ($data as $key => $entry)
+            {
                 if ($entry->getDateCreated() < Carbon::now()->subDays(30)) {
                     info("Entry older than 30 days, skipping");
                     continue;
@@ -58,9 +59,17 @@ class FeedExtractor implements ShouldQueue
                     info("Entry already processed");
                 }
             }
-        } catch (\Exception $exception) {
+
+            $this->feed->sync = Feed::COMPLETED;
+
+            $this->feed->save();
+
+
+        } catch (\Exception $exception)
+        {
+            dispatch(new FeedFinder($this->feed))->onQueue("feed-finder");
             info("Something went wrong {$this->feed->url} - So we will delete this feed}");
-            $this->feed->delete();
+
         }
     }
 

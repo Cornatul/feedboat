@@ -31,7 +31,7 @@
                                 <a href="#">{{ $feed->created_at }}</a>
                             </td>
                             <td>
-                                <a href="#">{{ $feed->status }}</a>
+                                <a href="#">{{ $feed->sync }}</a>
                             </td>
                             <td>
                                 <a href="#">Delete</a>

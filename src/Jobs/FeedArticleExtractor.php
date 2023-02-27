@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Cornatul\Feeds\Jobs;
 
 
@@ -70,7 +71,11 @@ class FeedArticleExtractor implements ShouldQueue
         } catch (\Exception $exception) {
             info("Something went wrong {$this->feed->url} - So we will delete this feed}");
         }
+
+
+
         return ArticleDto::from([]);
+
     }
 
     final public function failed($exception = null): void

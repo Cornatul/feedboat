@@ -46,6 +46,8 @@ return new class extends Migration
             $table->json('keywords')->nullable();
             $table->json('images')->nullable();
             $table->json('entities')->nullable();
+            $table->json('sentiment')->nullable();
+            $table->json('social')->nullable();
             $table->timestamps();
         });
     }

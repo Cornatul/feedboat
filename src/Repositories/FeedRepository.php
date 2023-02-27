@@ -23,7 +23,7 @@ class FeedRepository implements FeedRepositoryInterface
             'score' => $data['score'] ?? 0,
             'subscribers' => $data['subscribers'] ?? 0,
             'url' => $data['url'],
-            'sync' => 'initial'
+            'sync' => Feed::INITIAL,
         ]);
         return (bool)$id;
     }
