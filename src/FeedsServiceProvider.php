@@ -1,8 +1,9 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
+use Cornatul\Feeds\Console\ArticleExtractorCommand;
 use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Repositories\ArticleRepository;
@@ -38,6 +39,12 @@ class FeedsServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/migrations/' => \config_path('../database/migrations/'),
             ], 'feeds-migrations');
+
+
+            $this->commands([
+                ArticleExtractorCommand::class,
+            ]);
+
         }
     }
 

@@ -2,11 +2,11 @@
 
 namespace Cornatul\Feeds\Connectors;
 use Saloon\Http\Connector;
-class NlpConnector extends Connector
+class FeedlyConnector extends Connector
 {
     public function resolveBaseUrl(): string
     {
-        return 'https://v1.nlpapi.org/';
+        return 'https://feedly.com/v3/';
     }
 
     protected function defaultHeaders(): array
