@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - "main"
+            - "development"
 
 jobs:
     build-test:
@@ -15,7 +16,7 @@ jobs:
             - uses: php-actions/composer@v6
 
             - name: PHPUnit Tests
-              uses: php-actions/phpunit@master
+              uses: php-actions/phpunit@v9
               with:
                   bootstrap: vendor/autoload.php
                   configuration: phpunit.xml
