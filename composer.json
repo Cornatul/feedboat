@@ -1,5 +1,5 @@
 {
-    "name": "unixdevil/feedboat",
+    "name": "cornatul/feeds",
     "description": "A set of tools to find feeds from different sources ",
     "type": "library",
     "license": "MIT",
@@ -8,24 +8,27 @@
             "role": "Developer",
             "name": "Stefan I",
             "email": "Stefan@unxidevil.com",
-            "homepage": "https://unixdevil.com/"
+            "homepage": "https://cornatul.com/"
         }
     ],
     "autoload": {
         "psr-4": {
-            "UnixDevil\\FeedBoat\\": "src/"
+            "Cornatul\\Feeds\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "UnixDevil\\FeedBoat\\Tests\\": "tests/"
+            "Cornatul\\Feeds\\Tests\\": "tests/"
         }
     },
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": ">=7.5.0",
         "illuminate/support": ">=9.0.0",
-        "spatie/laravel-data": ">=3.0.0"
+        "spatie/laravel-data": ">=3.0.0",
+        "sammyjo20/saloon-cache-plugin": "^2.0",
+        "sammyjo20/saloon-laravel": "^2.0",
+        "league/html-to-markdown": "^5.2@dev"
     },
     "require-dev": {
         "mockery/mockery": "^1.5",
@@ -33,7 +36,7 @@
         "phpunit/phpunit": "^9.5"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
@@ -42,7 +45,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "UnixDevil\\FeedBoat\\Providers\\FeedBoatServiceProvider"
+                "Cornatul\\Feeds\\FeedsServiceProvider"
             ]
         }
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace UnixDevil\FeedBoat\Tests;
+namespace Cornatul\Feeds\Tests;
 
-use UnixDevil\FeedBoat\Providers\FeedBoatProvider;
+use Cornatul\Feeds\FeedsServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -14,9 +14,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     final protected function getPackageProviders($app):array
     {
-        $app->register(FeedBoatProvider::class);
+        $app->register(FeedsServiceProvider::class);
         return [
-            FeedBoatProvider::class
+            FeedsServiceProvider::class
         ];
     }
 
