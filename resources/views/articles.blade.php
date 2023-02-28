@@ -23,10 +23,10 @@
                     @foreach($articles as $article)
                         <tr>
                             <td>
-                                <a href="#">{{ $article->title }}</a>
+                                <a href="{{ route('feeds.article', [$article->id]) }}">{{ $article->title }}</a>
                             </td>
                             <td>
-                                <a href="#">Delete</a>
+                                <a href="#">Edit & Publish</a>
                             </td>
                         </tr>
                     @endforeach
@@ -34,4 +34,7 @@
             </table>
         </div>
     </div>
+
+    @include('marketing::layouts.partials.pagination', ['records' => $articles])
+
 @endsection

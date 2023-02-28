@@ -10,25 +10,28 @@ use Saloon\CachePlugin\Traits\HasCaching;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Illuminate\Support\Facades\Cache;
 use Saloon\CachePlugin\Drivers\LaravelCacheDriver;
-class FeedlyTopicRequest extends Request implements Cacheable
+class GetFeedsRequest extends Request implements HasBody, Cacheable
 {
     use HasCaching;
 
-    protected Method $method = Method::GET;
+    use HasJsonBody;
+
+    protected Method $method = Method::POST;
     public function __construct(
-        protected string $topic,
+        protected string $link,
     ){}
+
 
 
     public function resolveEndpoint(): string
     {
-        return '/recommendations/topics/'  . $this->topic;
+        return '/feed-finder';
     }
 
-    protected function defaultQuery(): array
+    protected function defaultBody(): array
     {
         return [
-            'locale' => "en",
+            'link' => $this->link,
         ];
     }
 
@@ -44,6 +47,6 @@ class FeedlyTopicRequest extends Request implements Cacheable
 
     protected function getCacheableMethods(): array
     {
-        return [Method::GET];
+        return [Method::GET, Method::POST];
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\Models;
 
 use App\Models\User;
@@ -62,5 +62,10 @@ class Feed extends Model
     final public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    final public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 }

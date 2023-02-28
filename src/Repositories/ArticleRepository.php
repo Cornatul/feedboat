@@ -24,10 +24,14 @@ class ArticleRepository implements ArticleRepositoryInterface
         return Article::where('feed_id', $feedId)->limit($limit)->paginate();
     }
 
-    public function getArticleById(int $articleId): View
+    public function getArticleById(int $articleId): Article
     {
         return Article::where('id', $articleId)->first();
     }
 
 
+    public function update(int $id, array $data): int
+    {
+        return Article::where('id', $id)->update($data);
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\Clients;
 
 use Cornatul\Feeds\Connectors\FeedlyConnector;
@@ -20,6 +20,7 @@ class FeedlyClient implements FeedFinderInterface
      */
     public function find(string $topic, string $language = "en"): FeedDTO
     {
+
         $dataArray = [];
 
         try {

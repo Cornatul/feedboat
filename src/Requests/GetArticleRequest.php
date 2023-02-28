@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\Requests;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;

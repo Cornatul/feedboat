@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
 use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
@@ -44,6 +44,8 @@ class FeedRepository implements FeedRepositoryInterface
 
     final public function listFeeds(int $perPage): LengthAwarePaginator
     {
-        return Feed::orderBy('created_at')->paginate($perPage);
+        return Feed::orderBy('created_at')
+            ->with('articles')
+            ->paginate($perPage);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Cornatul\Feeds\DTO;
 
 use Cornatul\Feeds\Models\Feed;
