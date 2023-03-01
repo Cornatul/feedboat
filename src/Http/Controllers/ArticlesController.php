@@ -67,4 +67,9 @@ class ArticlesController extends Controller
 
         return \view('feeds::publish', compact('article'));
     }
+
+    public function publishProcess(ArticleRepositoryInterface $articleRepository)
+    {
+
+    }
 }

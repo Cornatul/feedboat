@@ -15,8 +15,9 @@ Route::group(['middleware' => ['web','auth'],'prefix' => 'feeds', 'as' => 'feeds
 
     Route::get('/articles/{feedID}', [ArticlesController::class, 'articles'])->name('articles');
     Route::get('/article/{articleID}', [ArticlesController::class, 'article'])->name('article');
-    Route::get('/article/update/{articleID}', [ArticlesController::class, 'update'])->name('article.update');
+    Route::post('/article/update/{articleID}', [ArticlesController::class, 'update'])->name('article.update');
     Route::get('/article/publish/{articleID}', [ArticlesController::class, 'publish'])->name('article.publish');
+    Route::post('/publish', [ArticlesController::class, 'publish'])->name('article.publish.process');
     // Api routes
 
     Route::get('search/{topic}', [FeedsApiController::class, 'searchAction'])->name('searchAction');

@@ -13,7 +13,8 @@
     <div class="card">
         <div class="card-table table-responsive p-5">
 
-            <form action="{{ route('feeds.article.update', [$article->id]) }}">
+            <form method="POST" action="{{ route('feeds.article.update', [$article->id]) }}">
+                @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ $article->title }}">
