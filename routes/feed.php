@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web','auth'],'prefix' => 'feeds', 'as' => 'feeds.'], static function ()
 {
     Route::get('/', [FeedsController::class, 'index'])->name('index');
+    Route::get('/destroy/{id}', [FeedsController::class, 'destroy'])->name('destroy');
     Route::get('search', [FeedsController::class, 'search'])->name('search');
     Route::get('import', [FeedsController::class, 'import'])->name('import');
     Route::post('import/store', [FeedsController::class, 'store'])->name('import.store');

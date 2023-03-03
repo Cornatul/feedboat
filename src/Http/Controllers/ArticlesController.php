@@ -6,6 +6,8 @@ use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
+use Cornatul\Wordpress\Interfaces\WordpressRepositoryInterface;
+use Cornatul\Wordpress\WordpressServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -30,7 +32,7 @@ class ArticlesController extends Controller
 
     final public function articles(int $feedID, ArticleRepositoryInterface $articleRepository): ViewContract
     {
-        $articles = $articleRepository->getArticlesByFeedId($feedID, 10);
+        $articles = $articleRepository->getArticlesByFeedId($feedID, 20);
 
         return view('feeds::articles', compact('articles'));
     }
@@ -50,26 +52,23 @@ class ArticlesController extends Controller
             'markdown' => 'required',
         ]);
 
-        $data = $request->toArray();
+        $data = $request->except("_token");
 
         $articleRepository->update($articleID, $data);
 
-        return \redirect()->route('feeds.article.publish', ['articleID' => $articleID])
-            ->with('success', 'Article updated successfully! Now redirecting you to the publish page.');
+        if (class_exists(WordpressServiceProvider::class)) {
+            return \redirect()->route('wordpress.article.publish', ['articleID' => $articleID])
+                ->with('success', 'Article updated successfully! Now redirecting you to the publish page.');
+        }
+
+        return redirect()->back()->with('success', 'Article updated successfully!');
     }
 
 
     public function publish(int $article_id, Request $request, ArticleRepositoryInterface $articleRepository)
     {
-
         $article = $articleRepository->getArticleById($article_id);
 
-
         return \view('feeds::publish', compact('article'));
-    }
-
-    public function publishProcess(ArticleRepositoryInterface $articleRepository)
-    {
-
     }
 }

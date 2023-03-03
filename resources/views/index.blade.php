@@ -56,7 +56,10 @@
                                 <a href="#">{{ $feed->sync }}</a>
                             </td>
                             <td>
-                                <a href="#">Delete</a>
+                                <a href="{{ route('feeds.destroy', [$feed->id]) }}" class="btn btn-danger btn-sm btn-flat">
+                                    <i class="fa fa-trash"></i>
+                                    {{ __('Delete') }}
+                                </a>
                             </td>
                         </tr>
                     @endforeach

@@ -68,4 +68,12 @@ class FeedsController extends Controller
         return Redirect::to('feeds')->with('success', 'Feeds imported successfully');
     }
 
+    //create a function for deleteing a feed
+    final public function destroy(int $id, FeedRepositoryInterface $feedRepository): RedirectResponse
+    {
+        $feedRepository->deleteFeed($id);
+
+        return Redirect::to('feeds')->with('success', 'Feed deleted successfully');
+    }
+
 }
