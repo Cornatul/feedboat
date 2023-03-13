@@ -14,4 +14,6 @@ interface FeedRepositoryInterface
     public function imported(string $url): bool;
     public function findFeed(string $column, string $value): Feed;
     public function listFeeds(int $perPage): LengthAwarePaginator;
+
+    public function getFeed(int $id): Feed;
 }

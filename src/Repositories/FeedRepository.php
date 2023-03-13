@@ -52,4 +52,9 @@ class FeedRepository implements FeedRepositoryInterface
             ->with('articles')
             ->paginate($perPage);
     }
+
+    final public function getFeed(int $id): Feed
+    {
+        return Feed::find($id);
+    }
 }

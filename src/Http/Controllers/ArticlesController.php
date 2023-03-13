@@ -71,4 +71,13 @@ class ArticlesController extends Controller
 
         return \view('feeds::publish', compact('article'));
     }
+
+
+    public function allArticles(ArticleRepositoryInterface $repository): ViewContract
+    {
+
+        $articles = $repository->getAllArticles(20);
+
+        return view('feeds::allArticles', compact('articles'));
+    }
 }

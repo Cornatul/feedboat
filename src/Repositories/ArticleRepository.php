@@ -34,4 +34,9 @@ class ArticleRepository implements ArticleRepositoryInterface
     {
         return Article::where('id', $id)->update($data);
     }
+
+    public function getAllArticles(int $limit = 10): LengthAwarePaginator
+    {
+        return Article::with('feed')->orderBy('created_at', 'desc')->limit($limit)->paginate();
+    }
 }

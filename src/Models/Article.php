@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
  * Class Article
  * @method static create(array $postData)
  * @method static where(string $column, int $value)
+ * @method static destroy(int $id)
+ * @method static update(array $data)
+ * @method static first()
+ * @method static orderBy(string $column, string $direction)
+ *
  */
 class Article extends Model
 {
@@ -30,4 +35,10 @@ class Article extends Model
         "social",
         "sentiment",
     ];
+
+
+    public function feed()
+    {
+        return $this->belongsTo(Feed::class);
+    }
 }

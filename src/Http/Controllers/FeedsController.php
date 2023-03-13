@@ -76,4 +76,15 @@ class FeedsController extends Controller
         return Redirect::to('feeds')->with('success', 'Feed deleted successfully');
     }
 
+
+    // create a function that will sync the feed
+    final public function sync(int $id, FeedRepositoryInterface $feedRepository): RedirectResponse
+    {
+        $feed = $feedRepository->getFeed($id);
+
+        dispatch(new FeedExtractor($feed));
+
+        return Redirect::to('feeds')->with('success', 'Feed synced successfully');
+    }
+
 }

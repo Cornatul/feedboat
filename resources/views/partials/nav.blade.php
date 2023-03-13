@@ -11,4 +11,8 @@
         <a class="nav-link {{ request()->routeIs('feeds.search') ? 'active'  : '' }}"
            href="{{ route('feeds.search') }}">{{ __('Explore') }}</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('feeds.allArticles') ? 'active'  : '' }}"
+           href="{{ route('feeds.allArticles') }}">{{ __('Latest Articles') }}</a>
+    </li>
 </ul>
