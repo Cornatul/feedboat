@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
 use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
 use Illuminate\Pagination\LengthAwarePaginator;
 class FeedRepository implements FeedRepositoryInterface
@@ -28,9 +29,12 @@ class FeedRepository implements FeedRepositoryInterface
         return (bool)$id;
     }
 
-    final public function deleteFeed(int $id):bool
+    final public function deleteFeed(int $id): int
     {
-        return Feed::destroy($id);
+        Article::where('feed_id', $id)->delete();
+        return Feed::with('articles')
+            ->where('id', $id)
+            ->delete();
     }
     final public function findFeed(string $column, string $value): Feed
     {
@@ -47,5 +51,10 @@ class FeedRepository implements FeedRepositoryInterface
         return Feed::orderBy('created_at')
             ->with('articles')
             ->paginate($perPage);
+    }
+
+    final public function getFeed(int $id): Feed
+    {
+        return Feed::find($id);
     }
 }

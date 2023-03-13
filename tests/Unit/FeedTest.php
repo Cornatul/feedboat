@@ -2,13 +2,15 @@
 
 namespace Cornatul\Feeds\Tests\Unit;
 
+use App\Models\User;
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\DTO\FeedDto;
 use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Models\Article;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Mockery;
 
 
@@ -43,4 +45,19 @@ class FeedTest extends \Cornatul\Feeds\Tests\TestCase
 
     }
 
+
+    public function testCanStoreAndDispatchJob(): void
+    {
+
+
+        $content = 'test';
+        //test can store a file and dispatch a job
+        $file = UploadedFile::fake()->createWithContent('filename.ext', $content)->store('filename.ext');
+
+        //asert that the file was stored
+        Storage::disk('local')->assertExists($file);
+        //asset the store endpoint returns a 200
+        $this->assertEquals(405, $this->post('/feeds/import', ['file' => $file])->status());
+
+    }
 }

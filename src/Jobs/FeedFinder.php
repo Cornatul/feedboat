@@ -29,7 +29,7 @@ class FeedFinder  implements ShouldQueue
                 ]
             ]);
 
-            $collection = collect(
+            $collection = (
                 json_decode(
                     $response->getBody()->getContents(),
                     false,
@@ -38,7 +38,10 @@ class FeedFinder  implements ShouldQueue
                 )
             );
 
-            info($collection->toJson());
+            $feedUrl = ($collection->data->response[0]);
+            $this->feed->url = $feedUrl;
+            $this->feed->save();
+            dispatch(new FeedExtractor($this->feed))->onQueue("feed-extractor");
 
         }catch (\Exception $exception){
             info($exception->getMessage());

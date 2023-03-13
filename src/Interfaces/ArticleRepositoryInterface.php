@@ -17,4 +17,6 @@ interface ArticleRepositoryInterface
     public function getArticleById(int $articleId):Article;
 
     public function update(int $id, array $data):int;
+
+    public function getAllArticles(int $limit = 10):LengthAwarePaginator;
 }

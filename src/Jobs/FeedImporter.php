@@ -39,6 +39,9 @@ class FeedImporter implements ShouldQueue
         $this->file = $file;
     }
 
+    /**
+     * @throws \Exception
+     */
     final public function handle(): void
     {
         logger('FeedImporter: ' . $this->file);
@@ -63,7 +66,8 @@ class FeedImporter implements ShouldQueue
                     'url' => $value['XMLURL'],
                     'sync' => Feed::SYNCING
                 ]);
-                dispatch(new FeedExtractor($feed))->onQueue('feed-extractor');
+
+                dispatch(new FeedExtractor($feed))->onQueue('feed-extractor')->delay(now()->addSeconds(random_int(1, 10)));
             }
         }
     }
