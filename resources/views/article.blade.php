@@ -10,8 +10,12 @@
     <!-- Insert here a partials !-->
     @include('feeds::partials.nav')
     <!-- Cards !-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <div class="card">
         <div class="card-table table-responsive p-5">
+            <button id="copy" class="btn btn-primary" data-clipboard-target="#editor">
+                <i class="fa fa-clipboard"></i>
+            </button>
 
             <form method="POST" action="{{ route('feeds.article.update', [$article->id]) }}">
                 @csrf
@@ -21,40 +25,32 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea id="editor" class="form-control" id="content" name="markdown" rows="3">
-                        {{ $article->markdown }}
-                    </textarea>
+                    <textarea id="editor" class="form-control"  name="markdown"  style="height: 100vh"  rows="3">{{ $article->text }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
+
                 </div>
             </form>
 
         </div>
     </div>
-    <!---
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@toast-ui/editor@3.2.2/dist/toastui-editor-viewer.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@toast-ui/editor@3.2.2/dist/toastui-editor.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://rawgit.com/Grafikart/JS-Markdown-Editor/master/dist/mdeditor.css">
-
-    <script src="https://rawgit.com/Grafikart/JS-Markdown-Editor/master/dist/mdeditor.min.js"></script>
-
-    <script>
-        var md = new MdEditor('#editor', {
-            uploader: 'http://local.dev/Lab/MdEditor/app/upload.php',
-            preview: true,
-            images: [
-                {id: '1.jpg', url: 'http://lorempicsum.com/futurama/200/200/1'},
-                {id: '1.jpg', url: 'http://lorempicsum.com/futurama/200/200/2'},
-                {id: '1.jpg', url: 'http://lorempicsum.com/futurama/200/200/3'},
-                {id: '1.jpg', url: 'http://lorempicsum.com/futurama/200/200/4'}
-            ]
-        });
-    </script>
-    !-->
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script>
         const easyMDE = new EasyMDE({element: document.getElementById('editor')});
+        const copy = new ClipboardJS('#copy');
+        copy.on('success', function(e) {
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+        });
+        copy.on('error', function(e) {
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
     </script>
 @endsection

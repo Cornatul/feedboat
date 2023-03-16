@@ -4,12 +4,13 @@ namespace Cornatul\Feeds\Http\Controllers;
 
 use Cornatul\Feeds\Classes\Parser;
 use Cornatul\Feeds\DTO\FeedDto;
-use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Cornatul\Feeds\Jobs\FeedImporter;
 use Cornatul\Feeds\Models\Feed;
+use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -25,6 +26,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Illuminate\Contracts\View\View as ViewContract;
 use imelgrat\OPML_Parser\OPML_Parser;
+use Spatie\QueryBuilder\QueryBuilder;
+
 class FeedsController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -34,9 +37,15 @@ class FeedsController extends Controller
         $this->middleware('auth');
     }
 
-    final public function index(FeedRepositoryInterface $feedRepository): ViewContract
+
+    final public function index(
+        Request $request,
+        FeedRepositoryInterface $feedRepository,
+        SortableInterface $sortable
+    )
+    : ViewContract
     {
-        $feeds = $feedRepository->listFeeds(10);
+        $feeds = $feedRepository->listFeeds();
 
         return view('feeds::index', compact('feeds'));
     }
@@ -53,6 +62,7 @@ class FeedsController extends Controller
 
 
     /**
+     * //todo replace this with the validation class created
      * @throws ValidationException
      */
     final public function store(Request $request): RedirectResponse
@@ -61,11 +71,11 @@ class FeedsController extends Controller
             'file' => 'required',
         ]);
 
-        $file = $request->file('file')->store('feeds', 'public');
+        $file = $request->file('file')?->store('feeds', 'public');
 
         dispatch(new FeedImporter($file));
 
-        return Redirect::to('feeds')->with('success', 'Feeds imported successfully');
+        return redirect('feeds')->with('success', 'Feeds imported successfully');
     }
 
     //create a function for deleteing a feed
@@ -86,5 +96,6 @@ class FeedsController extends Controller
 
         return Redirect::to('feeds')->with('success', 'Feed synced successfully');
     }
+
 
 }

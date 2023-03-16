@@ -17,6 +17,7 @@
                 <tr>
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Feed') }}</th>
+                    <th>{{ __('Sentiment Positivity') }}</th>
                     <th>{{ __('Date') }}</th>
                     <th>{{ __('Actions') }}</th>
                 </tr>
@@ -29,6 +30,9 @@
                             </td>
                             <td>
                                 <a href="{{ route('feeds.articles', [$article->feed->id]) }}">{{ $article->feed->title }}</a>
+                            </td>
+                            <td>
+                                {{ @$article->sentiment }}
                             </td>
                             <td>
                                 {{ $article->created_at }}

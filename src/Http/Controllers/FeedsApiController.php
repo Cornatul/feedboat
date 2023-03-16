@@ -26,6 +26,12 @@ class FeedsApiController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param string $topic
+     * @param FeedFinderInterface $feed
+     * @return JsonResponse
+     * @todo rename this to explore action
+     */
     final public function searchAction(string $topic, FeedFinderInterface $feed): JsonResponse
     {
 
