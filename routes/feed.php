@@ -1,5 +1,6 @@
 <?php
 
+use Cornatul\Feeds\Components\FeedsViewComponent;
 use Cornatul\Feeds\Http\Controllers\ArticlesController;
 use Cornatul\Feeds\Http\Controllers\FeedsApiController;
 use Cornatul\Feeds\Http\Controllers\FeedsController;
@@ -25,4 +26,6 @@ Route::group(['middleware' => ['web','auth'],'prefix' => 'feeds', 'as' => 'feeds
 
     Route::get('search/{topic}', [FeedsApiController::class, 'searchAction'])->name('searchAction');
     Route::post('subscribe', [FeedsApiController::class, 'subscribeAction'])->name('subscribeAction');
+
+
 })->middleware('web');

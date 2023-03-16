@@ -2,11 +2,14 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
-use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\SortArticlesInterface;
+use Cornatul\Feeds\Respositories\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
-class ArticleRepository implements ArticleRepositoryInterface
+use Illuminate\Database\Eloquent\Model;
+
+class ArticleRepository implements ArticleRepositoryInterface, SortArticlesInterface
 {
     public function create(array $data): bool
     {
@@ -37,6 +40,14 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function getAllArticles(int $limit = 10): LengthAwarePaginator
     {
-        return Article::with('feed')->orderBy('created_at', 'desc')->limit($limit)->paginate();
+        return Article::with('feed')
+            ->orderByRaw("JSON_EXTRACT(sentiment, '$.pos') DESC")
+            ->limit($limit)->paginate();
     }
+
+    public function sort(Model $mode, string $what, string $how)
+    {
+        return $mode->orderBy($what, $how);
+    }
+
 }

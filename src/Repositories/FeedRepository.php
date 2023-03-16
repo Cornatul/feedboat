@@ -2,12 +2,25 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
+
+use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
+use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\QueryBuilder;
+
 class FeedRepository implements FeedRepositoryInterface
 {
+
+    private string $model = Feed::class;
+
+    private array $sorts = ['title', 'created_at', 'sync'];
+
+    private array $filters = ['title', 'description', 'sync'];
+
+    private int $perPage = 20;
 
     final public function createFeed(array $data): bool
     {
@@ -32,6 +45,7 @@ class FeedRepository implements FeedRepositoryInterface
     final public function deleteFeed(int $id): int
     {
         Article::where('feed_id', $id)->delete();
+
         return Feed::with('articles')
             ->where('id', $id)
             ->delete();
@@ -46,15 +60,19 @@ class FeedRepository implements FeedRepositoryInterface
         return Feed::where('url', $url)->exists();
     }
 
-    final public function listFeeds(int $perPage): LengthAwarePaginator
+    final public function listFeeds(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return Feed::orderBy('created_at')
-            ->with('articles')
-            ->paginate($perPage);
+        return QueryBuilder::for($this->model)
+            ->allowedIncludes(['articles'])
+            ->allowedSorts($this->sorts)
+            ->allowedFilters($this->filters)
+            ->paginate($this->perPage)->appends(request()->query());
     }
 
     final public function getFeed(int $id): Feed
     {
         return Feed::find($id);
     }
+
+
 }

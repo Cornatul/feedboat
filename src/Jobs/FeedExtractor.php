@@ -45,8 +45,8 @@ class FeedExtractor implements ShouldQueue
 
             foreach ($data as $key => $entry)
             {
-                if ($entry->getDateCreated() < Carbon::now()->subDays(30)) {
-                    info("Entry older than 30 days, skipping");
+                if ($entry->getDateCreated() < Carbon::now()->subDays(60)) {
+                    info("Entry older than 60 days, skipping");
                     continue;
                 }
 
@@ -68,8 +68,11 @@ class FeedExtractor implements ShouldQueue
         } catch (\Exception $exception)
         {
             dispatch(new FeedFinder($this->feed))->onQueue("feed-finder");
-            info("Something went wrong {$this->feed->url} - So we will delete this feed}");
 
+
+        }catch (\Throwable $exception)
+        {
+            info("Something went wrong {$this->feed->url} - So we will delete this feed}");
         }
     }
 

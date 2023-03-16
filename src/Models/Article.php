@@ -36,6 +36,13 @@ class Article extends Model
         "sentiment",
     ];
 
+    protected $casts = [
+        'sentiment' => 'json',
+        'pos' => 'float',
+        'neu' => 'float',
+        'neg' => 'float',
+        'compound' => 'float',
+    ];
 
     public function feed()
     {

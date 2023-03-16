@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Zofe\Rapyd\Traits\SSearch;
+
 /**
  * @mixin    Builder
  * @mixin    QueryBuilder
@@ -25,6 +27,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @method   static orderBy(string $string)
  * @method   static where(string $string, $value)
  * @method   static find($id)
+ * @method   static ssearch(string $search)
  * @method   static create(array $array)
  * @method   static firstOrCreate(array $array)
  * @method   static first()
@@ -32,10 +35,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 class Feed extends Model
 {
-    use HasFactory;
-
     public const INITIAL =  'initial';
-
     public const SYNCING =  'synchronizing';
 
     public const COMPLETED = 'completed';
@@ -68,4 +68,5 @@ class Feed extends Model
     {
         return $this->hasMany(Article::class);
     }
+
 }

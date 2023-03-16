@@ -5,11 +5,14 @@ namespace Cornatul\Feeds\Tests\Unit;
 use App\Models\User;
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\DTO\FeedDto;
-use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Models\Article;
+use Cornatul\Feeds\Models\Feed;
+use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Mockery;
 
@@ -58,6 +61,29 @@ class FeedTest extends \Cornatul\Feeds\Tests\TestCase
         Storage::disk('local')->assertExists($file);
         //asset the store endpoint returns a 200
         $this->assertEquals(405, $this->post('/feeds/import', ['file' => $file])->status());
+
+    }
+
+
+
+    public function testPagination()
+    {
+        //$total, $perPage, $currentPage = null
+        //create a test for the repository method
+        $mock = Mockery::mock(FeedRepositoryInterface::class);
+        $mock->shouldReceive('listFeeds')
+            ->once()
+            ->andReturns(new LengthAwarePaginator([
+                new Feed(),
+                new Feed(),
+                new Feed(),
+            ], 3, 3, null));
+        $response = $mock->listFeeds();
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $response);
+        $this->assertEquals(3, $response->total());
+        $this->assertEquals(3, $response->perPage());
+        $this->assertEquals(1, $response->currentPage());
 
     }
 }

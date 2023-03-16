@@ -4,11 +4,13 @@ namespace Cornatul\Feeds;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\Console\ArticleExtractorCommand;
-use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Repositories\ArticleRepository;
 use Cornatul\Feeds\Repositories\FeedRepository;
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Cornatul\Feeds\Services\SortableService;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Foundation\Application;
@@ -54,6 +56,7 @@ class FeedsServiceProvider extends ServiceProvider
         $this->app->bind(FeedFinderInterface::class, FeedlyClient::class);
         $this->app->bind(FeedRepositoryInterface::class, FeedRepository::class);
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(SortableInterface::class, SortableService::class);
 
     }
 
