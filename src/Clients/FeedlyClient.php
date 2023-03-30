@@ -5,10 +5,11 @@ namespace Cornatul\Feeds\Clients;
 use Cornatul\Feeds\Connectors\FeedlyConnector;
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
 use Cornatul\Feeds\Requests\FeedlyTopicRequest;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use JsonException;
+
+
+
 use Cornatul\Feeds\DTO\FeedDto;
+use ReflectionException;
 use Saloon\Exceptions\InvalidResponseClassException;
 use Saloon\Exceptions\PendingRequestException;
 
@@ -21,6 +22,7 @@ class FeedlyClient implements FeedFinderInterface
     public function find(string $topic, string $language = "en"): FeedDTO
     {
 
+        //@todo refactor this to a service that will accept a connect and a request and return a dto
         $dataArray = [];
 
         try {
@@ -31,7 +33,8 @@ class FeedlyClient implements FeedFinderInterface
 
             return FeedDto::from($response->json());
 
-        } catch (GuzzleException|\ReflectionException|InvalidResponseClassException|PendingRequestException $exception) {
+        } catch (ReflectionException|InvalidResponseClassException|PendingRequestException $exception) {
+            //@todo log this exception
 
             logger($exception->getMessage());
         }

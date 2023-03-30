@@ -5,7 +5,6 @@ namespace Cornatul\Feeds\Repositories\Interfaces;
 use Cornatul\Feeds\Models\Article;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-//todo refactor this and move it inside a interface folder that belongs to repository folder
 interface ArticleRepositoryInterface
 {
     public function create(array $data):bool;

@@ -3,9 +3,16 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Article
+ * @param string source
+ * @param string title
+ * @param string date
+ * @param string text
+ * @param string html
+ * @param string markdown
  * @method static create(array $postData)
  * @method static where(string $column, int $value)
  * @method static destroy(int $id)
@@ -44,7 +51,7 @@ class Article extends Model
         'compound' => 'float',
     ];
 
-    public function feed()
+    public function feed():BelongsTo
     {
         return $this->belongsTo(Feed::class);
     }

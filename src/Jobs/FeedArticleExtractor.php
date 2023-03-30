@@ -45,6 +45,7 @@ class FeedArticleExtractor implements ShouldQueue
      */
     final public function handle(ClientInterface $client): ArticleDto
     {
+        //todo rewrite this to use the nlp api connector
         try {
 
             $response = $client->post("https://v1.nlpapi.org/article", [

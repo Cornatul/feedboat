@@ -8,12 +8,12 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Builder;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Zofe\Rapyd\Traits\SSearch;
+
 
 /**
  * @mixin    Builder
@@ -26,8 +26,6 @@ use Zofe\Rapyd\Traits\SSearch;
  * @property string $status
  * @method   static orderBy(string $string)
  * @method   static where(string $string, $value)
- * @method   static find($id)
- * @method   static ssearch(string $search)
  * @method   static create(array $array)
  * @method   static firstOrCreate(array $array)
  * @method   static first()

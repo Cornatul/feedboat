@@ -6,9 +6,9 @@ namespace Cornatul\Feeds\Repositories;
 use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
-use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
+
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class FeedRepository implements FeedRepositoryInterface
@@ -22,12 +22,13 @@ class FeedRepository implements FeedRepositoryInterface
 
     private int $perPage = 20;
 
+    //todo improve this to a collection
     final public function createFeed(array $data): bool
     {
-
         if ($this->imported($data['website'])) {
             return false;
         }
+
 
         $id = Feed:: create([
             'user_id' => $data['user_id'] ?? 1,
@@ -39,6 +40,7 @@ class FeedRepository implements FeedRepositoryInterface
             'url' => $data['url'],
             'sync' => Feed::INITIAL,
         ]);
+
         return (bool)$id;
     }
 
@@ -50,6 +52,13 @@ class FeedRepository implements FeedRepositoryInterface
             ->where('id', $id)
             ->delete();
     }
+
+    /**
+     * @param string $column
+     * @param string $value
+     * @return Feed
+     * @todo rename this and modify this to return a feed object and accept more params maybe a query object with a builder method
+     */
     final public function findFeed(string $column, string $value): Feed
     {
         return Feed::where($column, $value)->first();
@@ -60,8 +69,10 @@ class FeedRepository implements FeedRepositoryInterface
         return Feed::where('url', $url)->exists();
     }
 
-    final public function listFeeds(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    final public function listFeeds(): LengthAwarePaginator
     {
+        //@todo refactor this to accept a request and push to a pipeline that will use the query builder to build the query
+
         return QueryBuilder::for($this->model)
             ->allowedIncludes(['articles'])
             ->allowedSorts($this->sorts)

@@ -10,9 +10,8 @@ use Saloon\CachePlugin\Traits\HasCaching;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Illuminate\Support\Facades\Cache;
 use Saloon\CachePlugin\Drivers\LaravelCacheDriver;
-class GetArticleRequest extends Request implements HasBody, Cacheable
+class GetArticleRequest extends Request implements HasBody
 {
-    use HasCaching;
 
     use HasJsonBody;
 
@@ -35,18 +34,4 @@ class GetArticleRequest extends Request implements HasBody, Cacheable
         ];
     }
 
-    public function resolveCacheDriver(): Driver
-    {
-        return new LaravelCacheDriver(Cache::store('file'));
-    }
-
-    public function cacheExpiryInSeconds(): int
-    {
-        return 3600; // One Hour
-    }
-
-    protected function getCacheableMethods(): array
-    {
-        return [Method::GET, Method::POST];
-    }
 }

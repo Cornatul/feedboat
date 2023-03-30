@@ -2,6 +2,9 @@
 
 namespace Cornatul\Feeds\Classes;
 
+/**
+ * @todo rewrite this to use laminas parser
+ */
 class Parser implements \Iterator
 {
     /**

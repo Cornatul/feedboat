@@ -12,6 +12,6 @@ interface SortableInterface
      * @param Request $request
      * @return mixed
      */
-    public function sort($model, Request $request);
+    public function sort(Model $model, Request $request);
 
 }

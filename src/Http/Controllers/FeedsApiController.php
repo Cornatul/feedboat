@@ -3,8 +3,8 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Http\Controllers;
 
 use Cornatul\Feeds\Interfaces\FeedFinderInterface;
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
+use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

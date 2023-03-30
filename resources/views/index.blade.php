@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <!-- Insert here a partials !-->
+    <!-- The nav !-->
     @include('feeds::partials.nav')
 
 
