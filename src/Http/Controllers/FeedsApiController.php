@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Http\Controllers;
 
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Contracts\FeedFinderInterface;
+use Cornatul\Feeds\Contracts\FeedRepositoryInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

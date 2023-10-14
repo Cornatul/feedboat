@@ -4,6 +4,7 @@ namespace Cornatul\Feeds\DTO;
 
 use Cornatul\Feeds\Models\Feed;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
 
@@ -26,7 +27,8 @@ class FeedDto extends Data
 
     public string $visual;
 
-    final public function getFeeds(): array
+    //move this logic to a transformer
+    final public function getFeeds(): Collection
     {
         $content = collect();
 
@@ -55,7 +57,7 @@ class FeedDto extends Data
             $content->push($data);
         }
 
-        return $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true)->toArray();
+        return $content->sortBy('subscribers', $options = SORT_REGULAR, $descending = true);
     }
 
     private function checkImported(string $url): bool

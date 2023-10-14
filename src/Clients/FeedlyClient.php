@@ -3,7 +3,8 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Clients;
 
 use Cornatul\Feeds\Connectors\FeedlyConnector;
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
+use Cornatul\Feeds\Contracts\FeedManager;
+use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Requests\FeedlyTopicRequest;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -13,15 +14,13 @@ use Saloon\Exceptions\InvalidResponseClassException;
 use Saloon\Exceptions\PendingRequestException;
 
 
-class FeedlyClient implements FeedFinderInterface
+class FeedlyClient implements FeedManager
 {
     /**
      * @method find
      */
-    public function find(string $topic, string $language = "en"): FeedDTO
+    public final function find(string $topic, string $language = "en"): FeedDTO
     {
-
-        $dataArray = [];
 
         try {
 
@@ -36,7 +35,7 @@ class FeedlyClient implements FeedFinderInterface
             logger($exception->getMessage());
         }
 
-        return FeedDto::from($dataArray);
+        return FeedDto::from([]);
 
     }
 

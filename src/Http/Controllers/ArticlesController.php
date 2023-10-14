@@ -4,7 +4,7 @@ namespace Cornatul\Feeds\Http\Controllers;
 
 use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
+use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Cornatul\Wordpress\Interfaces\WordpressRepositoryInterface;
 use Cornatul\Wordpress\WordpressServiceProvider;

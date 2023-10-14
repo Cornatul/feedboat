@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Jobs;
 
 use Cornatul\Feeds\DTO\ArticleDto;
-use Cornatul\Feeds\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Contracts\ArticleRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
 use Illuminate\Bus\Queueable;

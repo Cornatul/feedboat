@@ -6,7 +6,7 @@ use Cornatul\Feeds\Classes\Parser;
 use Cornatul\Feeds\DTO\FeedDto;
 use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
 use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
+use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Cornatul\Feeds\Jobs\FeedImporter;
 use Cornatul\Feeds\Models\Feed;
