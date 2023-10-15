@@ -2,14 +2,16 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
-use Cornatul\Feeds\Repositories\Interfaces\SortArticlesInterface;
-use Cornatul\Feeds\Respositories\Interfaces\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
+
 use Cornatul\Feeds\Models\Article;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
-class ArticleRepository implements ArticleRepositoryInterface, SortArticlesInterface
+class ArticleEloquentRepository implements ArticleRepositoryInterface, SortableInterface
 {
     public function create(array $data): bool
     {
@@ -45,9 +47,10 @@ class ArticleRepository implements ArticleRepositoryInterface, SortArticlesInter
             ->limit($limit)->paginate();
     }
 
-    public function sort(Model $mode, string $what, string $how)
+    public function sort(Model $mode, Request $request): LengthAwarePaginator
     {
-        return $mode->orderBy($what, $how);
+        $what = $request->get('what');
+        $how = $request->get('how');
+        return $mode->orderBy($what, $how)->paginate();
     }
-
 }

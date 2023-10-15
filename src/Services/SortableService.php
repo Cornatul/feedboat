@@ -2,7 +2,7 @@
 
 namespace Cornatul\Feeds\Services;
 
-use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 

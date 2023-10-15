@@ -4,13 +4,13 @@ namespace Cornatul\Feeds\Http\Controllers;
 
 use Cornatul\Feeds\Classes\Parser;
 use Cornatul\Feeds\DTO\FeedDto;
-use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
-use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
 use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Cornatul\Feeds\Jobs\FeedImporter;
 use Cornatul\Feeds\Models\Feed;
-use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -90,9 +90,15 @@ class FeedsController extends Controller
     // create a function that will sync the feed
     final public function sync(int $id, FeedRepositoryInterface $feedRepository): RedirectResponse
     {
-        $feed = $feedRepository->getFeed($id);
 
-        dispatch(new FeedExtractor($feed));
+        try {
+            $feed = $feedRepository->getFeed($id);
+
+            dispatch(new FeedExtractor($feed));
+
+        }catch (\Exception $exception) {
+            return Redirect::to('feeds')->with('error', 'Feed sync failed');
+        }
 
         return Redirect::to('feeds')->with('success', 'Feed synced successfully');
     }

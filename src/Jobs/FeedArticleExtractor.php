@@ -45,6 +45,8 @@ class FeedArticleExtractor implements ShouldQueue
      */
     final public function handle(ClientInterface $client): ArticleDto
     {
+        info("Extracting article {$this->url}");
+
         try {
 
             $response = $client->post("https://v1.nlpapi.org/article", [
@@ -69,7 +71,8 @@ class FeedArticleExtractor implements ShouldQueue
             return $dto;
 
         } catch (\Exception $exception) {
-            info("Something went wrong {$this->feed->url} - So we will delete this feed}");
+            info("Something went wrong trying to extract the {$this->url} }");
+            info($exception->getTraceAsString());
         }
 
 

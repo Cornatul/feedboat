@@ -29,6 +29,9 @@ class FeedExtractor implements ShouldQueue
 
     public int $tries = 1;
 
+    public int $timeout = 360;
+
+
     public function __construct(Feed $feed)
     {
         $this->feed = $feed;
@@ -53,33 +56,52 @@ class FeedExtractor implements ShouldQueue
                 if (!Cache::has($entry->getLink())) {
                     Cache::put($entry->getLink(), $entry->getLink(), 60 * 60 * (24 * 30) * 30); //30 days in seconds
                     info("New entry found we should process it - {$entry->getLink()}");
-                    dispatch(new FeedArticleExtractor($entry->getLink(), $this->feed))->onQueue("article-extractor");
+                    try {
 
+                        dispatch(new FeedArticleExtractor($entry->getLink(), $this->feed))->onQueue("article-extractor");
+
+                    } catch (\Exception $exception) {
+                        info("Something went wrong extracting the article {$entry->getLink()}}");
+                        info($exception->getTraceAsString());
+                    }
                 } else {
                     info("Entry already processed");
                 }
             }
 
             $this->feed->sync = Feed::COMPLETED;
-
             $this->feed->save();
 
 
-        } catch (\Exception $exception)
+        }catch (\Error $exception)
         {
-            dispatch(new FeedFinder($this->feed))->onQueue("feed-finder");
-
-
-        }catch (\Throwable $exception)
-        {
-            info("Something went wrong {$this->feed->url} - So we will delete this feed}");
+            info("Something went wrong {$this->feed->url}");
+            info($exception->getLine());
+            info($exception->getMessage());
+            info($exception->getTraceAsString());
         }
     }
 
     final public function failed($exception = null): void
     {
+        info("Failed to extract {$exception->getMessage()}");
         $this->delete();
+    }
 
-        $this->feed->delete();
+    final public function tags(): array
+    {
+        return [
+            'feed',
+            'extractor',
+            'feed-extractor',
+            'feed-extractor-' . $this->feed->id,
+            'feed-extractor-' . $this->feed->id . '-' . $this->feed->url,
+        ];
+    }
+
+    final public function completionCallback(): void
+    {
+        $this->feed->sync = Feed::COMPLETED;
+        $this->feed->save();
     }
 }

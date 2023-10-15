@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Http\Controllers;
 
-use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
-use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
 use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Jobs\FeedExtractor;
 use Cornatul\Wordpress\Interfaces\WordpressRepositoryInterface;

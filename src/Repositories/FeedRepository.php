@@ -3,10 +3,10 @@ declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
 
-use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
-use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;

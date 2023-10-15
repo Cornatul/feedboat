@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Cornatul\Feeds\Repositories\Interfaces;
+namespace Cornatul\Feeds\Repositories\Contracts;
 
 use Cornatul\Feeds\Models\Article;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cornatul\Feeds\Repositories\Interfaces;
+namespace Cornatul\Feeds\Repositories\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -12,6 +12,6 @@ interface SortableInterface
      * @param Request $request
      * @return mixed
      */
-    public function sort($model, Request $request);
+    public function sort(Model $model, Request $request);
 
 }
