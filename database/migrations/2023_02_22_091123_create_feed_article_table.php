@@ -40,6 +40,7 @@ return new class extends Migration
             $table->longText('text');
             $table->longText('html');
             $table->longText('markdown');
+            $table->longText('spacy');
             $table->string('banner');
             $table->longText('summary');
             $table->json('authors')->nullable();

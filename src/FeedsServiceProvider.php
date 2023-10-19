@@ -4,12 +4,14 @@ namespace Cornatul\Feeds;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\Console\ArticleExtractorCommand;
-use Cornatul\Feeds\Repositories\Interfaces\ArticleRepositoryInterface;
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
-use Cornatul\Feeds\Repositories\ArticleRepository;
+use Cornatul\Feeds\Console\FeedEntriesExtractor;
+use Cornatul\Feeds\Contracts\FeedManager;
+use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
+use Cornatul\Feeds\Contracts\FeedFinderInterface;
+use Cornatul\Feeds\Repositories\ArticleEloquentRepository;
 use Cornatul\Feeds\Repositories\FeedRepository;
-use Cornatul\Feeds\Repositories\Interfaces\FeedRepositoryInterface;
-use Cornatul\Feeds\Repositories\Interfaces\SortableInterface;
+use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
+use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 use Cornatul\Feeds\Services\SortableService;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -23,6 +25,9 @@ class FeedsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'feeds');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/feed.php');
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('feeds.php'),
+        ], 'feeds-config');
 
         if ($this->app->runningInConsole()) {
 
@@ -45,6 +50,7 @@ class FeedsServiceProvider extends ServiceProvider
 
             $this->commands([
                 ArticleExtractorCommand::class,
+                FeedEntriesExtractor::class
             ]);
 
         }
@@ -53,9 +59,15 @@ class FeedsServiceProvider extends ServiceProvider
     final public function register(): void
     {
         $this->app->bind(ClientInterface::class, Client::class);
-        $this->app->bind(FeedFinderInterface::class, FeedlyClient::class);
+        //todo move this to a system server manager class  and use a system provider for every social provider
+        //@todo -> The provider should be able to register the social client and return a social client instance response that contais the feed dto , this can be a any response from rss clients which are contained into a docker server that is running on the system gateway.
+        $this->app->bind(FeedManager::class, FeedlyClient::class);
+
+
+
+
         $this->app->bind(FeedRepositoryInterface::class, FeedRepository::class);
-        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleEloquentRepository::class);
         $this->app->bind(SortableInterface::class, SortableService::class);
 
     }

@@ -33,6 +33,7 @@ class FeedImporter implements ShouldQueue
 
     public int $tries = 1;
 
+    public int $timeout = 3600;
 
     public function __construct(string $file)
     {

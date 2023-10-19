@@ -2,9 +2,10 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Http\Controllers;
 
-use Cornatul\Feeds\Interfaces\FeedFinderInterface;
-use Cornatul\Feeds\Interfaces\FeedRepositoryInterface;
+
+use Cornatul\Feeds\Contracts\FeedManager;
 use Cornatul\Feeds\Jobs\FeedExtractor;
+use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -32,7 +33,7 @@ class FeedsApiController extends Controller
      * @return JsonResponse
      * @todo rename this to explore action
      */
-    final public function searchAction(string $topic, FeedFinderInterface $feed): JsonResponse
+    final public function searchAction(string $topic, FeedManager $feed): JsonResponse
     {
 
         $feedDto = $feed->find($topic, 'en');
@@ -43,9 +44,16 @@ class FeedsApiController extends Controller
             "feed" => $feedDto
         ]);
 
+
         return response()->json(  $feeds->toArray(),200,[],JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @todo createa dto here maybe
+     * @param Request $request
+     * @param FeedRepositoryInterface $feedRepository
+     * @return JsonResponse
+     */
     final public function subscribeAction(Request $request, FeedRepositoryInterface $feedRepository): JsonResponse
     {
         $response = $feedRepository->createFeed($request->all());

@@ -2,11 +2,13 @@
 
 namespace Cornatul\Feeds\Services;
 
+use Cornatul\Feeds\Contracts\ArticleManager;
+use Cornatul\Feeds\DTO\ArticleDto;
 use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class SortableService implements SortableInterface
+class NlpService implements ArticleManager
 {
 
     /**
@@ -15,8 +17,9 @@ class SortableService implements SortableInterface
      * @param Request $request
      * @return mixed
      */
-    public function sort($model, Request $request)
+    public  function extract(string $url): \Cornatul\Feeds\DTO\ArticleDto
     {
-        return $model->orderBy($request->get('sortWhat'), $request->get('sortHow'));
+        return new ArticleDto();
     }
+
 }

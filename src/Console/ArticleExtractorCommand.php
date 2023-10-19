@@ -63,6 +63,7 @@ class ArticleExtractorCommand extends Command
 
         $url = $this->argument('url');
 
+
         $connector = new NlpConnector();
 
         $response = $connector->send(new GetArticleRequest($url));
