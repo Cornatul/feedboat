@@ -4,36 +4,28 @@ namespace Cornatul\Feeds\Tests\Unit;
 
 use App\Models\User;
 use Cornatul\Feeds\Clients\FeedlyClient;
+use Cornatul\Feeds\Connectors\FeedlyConnector;
 use Cornatul\Feeds\DTO\FeedDto;
 use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
 use Cornatul\Feeds\Contracts\FeedFinderInterface;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Models\Feed;
 use Cornatul\Feeds\Repositories\Contracts\FeedRepositoryInterface;
+use Cornatul\Feeds\Requests\FeedlyTopicRequest;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Facades\Storage;
 use Mockery;
+use Saloon\Contracts\PendingRequest;
+use Saloon\Http\Response;
 
 
 class FeedTest extends \Cornatul\Feeds\Tests\TestCase
 {
 
-    /**
-     * @throws \JsonException
-     */
-    public function testGetSentiment():void
-    {
-        $mock = Mockery::mock(FeedlyClient::class);
-        $mock->shouldReceive('find')
-            ->once()
-            ->with('topic', 'en')
-            ->andReturn(new FeedDto());
-        $response = $mock->find('topic', 'en');
-
-        $this->assertInstanceOf(FeedDto::class, $response);
-    }
 
     public function testCanGetArticles(): void
     {
