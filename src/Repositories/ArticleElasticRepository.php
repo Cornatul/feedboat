@@ -4,6 +4,7 @@ namespace Cornatul\Feeds\Repositories;
 
 
 
+use Cornatul\Feeds\DTO\ArticleDto;
 use Cornatul\Feeds\Models\Article;
 use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
 use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
@@ -13,9 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 class ArticleElasticRepository implements ArticleRepositoryInterface
 {
-    public function create(array $data): bool
+    public final function create(ArticleDto $data): bool
     {
-        $id =  Article::create($data);
+        $id =  Article::create($data->toArray());
         return (bool)$id;
     }
 

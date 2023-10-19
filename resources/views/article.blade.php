@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea id="editor" class="form-control"  name="markdown"  style="height: 100vh"  rows="3">{{ $article->text }}</textarea>
+                    <textarea id="editor" class="form-control"  name="markdown"  style="height: 100vh"  rows="3">{{ $article->spacy }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -4,6 +4,7 @@ namespace Cornatul\Feeds\Jobs;
 
 
 use Carbon\Carbon;
+use Cornatul\Feeds\Clients\FeedLaminasClient;
 use Cornatul\Feeds\Models\Feed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Batch;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Laminas\Feed\Reader\Reader;
+use function Laravel\Prompts\error;
 
 /**
  * @package UnixDevil\Crawler\Jobs
@@ -44,12 +46,18 @@ class FeedExtractor implements ShouldQueue
 
         try {
 
+            $client = new FeedLaminasClient();
+
+            Reader::setHttpClient($client);
+
             $data = Reader::import($this->feed->url);
+
+
 
             foreach ($data as $key => $entry)
             {
                 if ($entry->getDateCreated() < Carbon::now()->subDays(60)) {
-                    info("Entry older than 60 days, skipping");
+                    info("Article Entry older than 60 days, skipping");
                     continue;
                 }
 
@@ -62,11 +70,13 @@ class FeedExtractor implements ShouldQueue
 
                     } catch (\Exception $exception) {
                         info("Something went wrong extracting the article {$entry->getLink()}}");
+                        info($exception->getLine());
+                        info($exception->getMessage());
                         info($exception->getTraceAsString());
                     }
-                } else {
-                    info("Entry already processed");
                 }
+
+                info("Article Entry already processed");
             }
 
             $this->feed->sync = Feed::COMPLETED;

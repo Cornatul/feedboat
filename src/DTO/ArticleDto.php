@@ -23,10 +23,14 @@ class ArticleDto extends Data
     public string $markdown;
     public string $banner;
     public string $summary;
-    public ?array $authors;
+    public string $spacy;
+
+    public array |string | null $authors;
+
     public ?array $keywords;
     public ?array $images;
     public ?array $entities;
+
     public ? StdClass $sentiment;
     public ? StdClass $social;
 }

@@ -38,12 +38,7 @@ class FeedsController extends Controller
     }
 
 
-    final public function index(
-        Request $request,
-        FeedRepositoryInterface $feedRepository,
-        SortableInterface $sortable
-    )
-    : ViewContract
+    final public function index(FeedRepositoryInterface $feedRepository): ViewContract
     {
         $feeds = $feedRepository->listFeeds();
 

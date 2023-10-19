@@ -45,11 +45,12 @@ class FeedArticleExtractor implements ShouldQueue
      */
     final public function handle(ClientInterface $client): ArticleDto
     {
-        info("Extracting article {$this->url}");
 
         try {
 
-            $response = $client->post("https://v1.nlpapi.org/article", [
+            //rewrite to use the nlp client instead of the reader
+            //todo change this to use the config
+            $response = $client->post("http://172.16.238.245:8000/article", [
                 'json' => [
                     'link' => $this->url
                 ]
@@ -72,6 +73,8 @@ class FeedArticleExtractor implements ShouldQueue
 
         } catch (\Exception $exception) {
             info("Something went wrong trying to extract the {$this->url} }");
+            info($exception->getLine());
+            info($exception->getMessage());
             info($exception->getTraceAsString());
         }
 

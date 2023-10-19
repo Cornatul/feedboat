@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories;
 
+use Cornatul\Feeds\DTO\ArticleDto;
 use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
 use Cornatul\Feeds\Repositories\Contracts\SortableInterface;
 
@@ -13,9 +14,11 @@ use Illuminate\Http\Request;
 
 class ArticleEloquentRepository implements ArticleRepositoryInterface, SortableInterface
 {
-    public function create(array $data): bool
+    public final function create(array $articleDto): bool
     {
-        $id =  Article::create($data);
+
+        $id =  Article::create($articleDto);
+
         return (bool)$id;
     }
 
@@ -47,6 +50,7 @@ class ArticleEloquentRepository implements ArticleRepositoryInterface, SortableI
             ->limit($limit)->paginate();
     }
 
+    //todo move this to a sortable service
     public function sort(Model $mode, Request $request): LengthAwarePaginator
     {
         $what = $request->get('what');

@@ -2,13 +2,14 @@
 declare(strict_types=1);
 namespace Cornatul\Feeds\Repositories\Contracts;
 
+use Cornatul\Feeds\DTO\ArticleDto;
 use Cornatul\Feeds\Models\Article;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-//todo refactor this and move it inside a interface folder that belongs to repository folder
+//todo refactor this to a crud interface
 interface ArticleRepositoryInterface
 {
-    public function create(array $data):bool;
+    public function create(array $articleDto):bool;
 
     public function destroy(int $id):int;
 

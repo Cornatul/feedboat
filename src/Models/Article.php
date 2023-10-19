@@ -26,6 +26,7 @@ class Article extends Model
         'text',
         'html',
         'markdown',
+        'spacy',
         'banner',
         'summary',
         "authors",

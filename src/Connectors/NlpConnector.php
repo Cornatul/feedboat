@@ -7,7 +7,7 @@ class NlpConnector extends Connector
 {
     public function resolveBaseUrl(): string
     {
-        return Config::get('nlp.url');
+        return Config::get('feeds.nlp-api-url');
     }
 
     protected function defaultHeaders(): array

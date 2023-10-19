@@ -4,6 +4,7 @@ namespace Cornatul\Feeds;
 
 use Cornatul\Feeds\Clients\FeedlyClient;
 use Cornatul\Feeds\Console\ArticleExtractorCommand;
+use Cornatul\Feeds\Console\FeedEntriesExtractor;
 use Cornatul\Feeds\Contracts\FeedManager;
 use Cornatul\Feeds\Repositories\Contracts\ArticleRepositoryInterface;
 use Cornatul\Feeds\Contracts\FeedFinderInterface;
@@ -24,6 +25,9 @@ class FeedsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'feeds');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/feed.php');
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('feeds.php'),
+        ], 'feeds-config');
 
         if ($this->app->runningInConsole()) {
 
@@ -46,6 +50,7 @@ class FeedsServiceProvider extends ServiceProvider
 
             $this->commands([
                 ArticleExtractorCommand::class,
+                FeedEntriesExtractor::class
             ]);
 
         }
